@@ -3,6 +3,9 @@
 *.csv
 *.pt
 
+!train_split.json
+!test_split.json
+
 
 # Byte-compiled / optimized / DLL files
 __pycache__/
