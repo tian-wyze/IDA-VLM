@@ -7,6 +7,22 @@ Tian's work on IDA-VLM
 Create WYZE in-house IDA-VLM benchmark.
 
 
+## Env
+
+```bash
+conda create -n ida-vlm python=3.10
+conda clean --all
+
+pip install pandas tqdm boto3 matplotlib
+# in case nvidia driver was swept due to GCP kernel update, reinstall drivers
+sudo /opt/deeplearning/install-driver.sh
+
+# install torch and xformers of compatible versions
+pip install --force-reinstall torch==2.5.1 torchvision==0.20.1 torchaudio==2.5.1 --index-url https://download.pytorch.org/whl/cu121
+pip install xformers==0.0.28.post3
+```
+
+
 ## Benchmarks
 
 WYZE in-house data
@@ -25,7 +41,7 @@ Using the `wyze_person_v2_cross_clothes` for example, we first split the dataset
 
 ```bash
 cd prepare_dataset/
-python  split_train_test.py
+python split_train_test.py
 
 # calculate the embeddings and cosine simialrities between query and gallery images
 python calculate_embed_sim.py
@@ -34,9 +50,14 @@ python calculate_embed_sim.py
 python prepare_gallery.py test 0.8
 
 # visualize some gallery examples for sanity check
-
+python visualize_gallery.py
 ```
 
+## Test VLM
+
+```bash
+
+```
 
 1. Access data in the google storage bucket
 

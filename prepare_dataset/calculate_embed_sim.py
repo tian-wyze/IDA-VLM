@@ -50,6 +50,7 @@ def cal_embedding(img_paths, folder):
     model = torch.hub.load('facebookresearch/dinov2', 'dinov2_vitl14')
     model.eval()
     device = torch.device('cuda' if torch.cuda.is_available() else 'cpu')
+    print('Using device:', device)
     model = model.to(device)
 
     features = []
@@ -74,9 +75,11 @@ if __name__ == "__main__":
         split = args[1]
     else:
         # give instructions on how to run the script, and exit
-        print('Please provide the split to process (train or test).')
-        print('Example: python calculate_embed_sim.py train')
-        sys.exit(1)
+        # print('Please provide the split to process (train or test).')
+        # print('Example: python calculate_embed_sim.py train')
+        # sys.exit(1)
+
+        split = 'test' # default to test split if no argument is provided
 
     split_file = f'../dataset/{dataset}/{split}_split.json'
 
