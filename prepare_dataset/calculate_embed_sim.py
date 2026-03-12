@@ -67,8 +67,11 @@ def cal_embedding(img_paths, folder):
 
 if __name__ == "__main__":
 
-    dataset = 'wyze_person_v2_cross_clothes'
-    folder = '/home/tian.liu/data/wyze_person_v2/cross_clothes'
+    # dataset = 'wyze_person_v2_cross_clothes'
+    # folder = '/home/tian.liu/data/wyze_person_v2/cross_clothes'
+
+    dataset = 'wyze_person_v2_same_clothes'
+    folder = '/home/tian.liu/data/wyze_person_v2/same_clothes'
 
     args = sys.argv
     if len(args) > 1:

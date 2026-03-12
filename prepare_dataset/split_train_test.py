@@ -32,8 +32,13 @@ def format_split(query, gallery):
 
 if __name__ == "__main__":
 
-    file = '/home/tian.liu/data/wyze_person_v2/cross_clothes/cross_clothes.json'
-    dataset = 'wyze_person_v2_cross_clothes'
+    # file = '/home/tian.liu/data/wyze_person_v2/cross_clothes/cross_clothes.json'
+    # dataset = 'wyze_person_v2_cross_clothes'
+    # N = 400
+
+    file = '/home/tian.liu/data/wyze_person_v2/same_clothes/same_clothes.json'
+    dataset = 'wyze_person_v2_same_clothes'
+    N = 200
 
     with open(file, 'r') as f:
         data = json.load(f)
@@ -62,8 +67,8 @@ if __name__ == "__main__":
     random.seed(42)
     random.shuffle(identity)
 
-    train_id = identity[:400]
-    test_id = identity[400:]
+    train_id = identity[:N]
+    test_id = identity[N:]
     print('number of train identities:', len(train_id))
     print('number of test identities:', len(test_id))
 

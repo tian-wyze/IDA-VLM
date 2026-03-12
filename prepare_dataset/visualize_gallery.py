@@ -40,8 +40,13 @@ if __name__ == "__main__":
 
     dataset = 'wyze_person_v2_cross_clothes'
     folder = '/home/tian.liu/data/wyze_person_v2/cross_clothes'
+
+    # dataset = 'wyze_person_v2_same_clothes'
+    # folder = '/home/tian.liu/data/wyze_person_v2/same_clothes'
+
     k = 5
-    threshold = 0.3
+    threshold = 0.5
+    num_examples = 10
 
     # load the test cases
     file = f'../dataset/{dataset}/test_cases_k={k}_threshold={threshold}.json'
@@ -50,5 +55,5 @@ if __name__ == "__main__":
     print('number of test cases:', len(test_cases))
 
     # choose a random test case to visualize
-    for i in range(10):
+    for i in range(num_examples):
         visualize_case()

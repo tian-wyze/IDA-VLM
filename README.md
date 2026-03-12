@@ -47,7 +47,7 @@ python split_train_test.py
 python calculate_embed_sim.py
 
 # format the test file, where k gallery images (> threshold) are defined for each query image
-python prepare_gallery.py test 0.8
+python prepare_gallery.py test 5 0.5
 
 # visualize some gallery examples for sanity check
 python visualize_gallery.py
@@ -80,5 +80,10 @@ gsutil du -sh gs://wyze-ai-team-data/wyze_person_v2/
 cd /home/tian.liu/data/
 gsutil -m cp -r gs://wyze-ai-team-data/wyze_person_v1/ .
 gsutil -m cp -r gs://wyze-ai-team-data/wyze_person_v2/ .
+
+# to increase VM disk space, first update the disk space on GCP portal
+# then grow the partition and stretch the file system
+sudo growpart /dev/sda 1
+sudo resize2fs /dev/sda1
 ```
 
