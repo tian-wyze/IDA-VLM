@@ -13,7 +13,7 @@ Create WYZE in-house IDA-VLM benchmark.
 conda create -n ida-vlm python=3.10
 conda clean --all
 
-pip install pandas tqdm boto3 matplotlib
+pip install pandas tqdm boto3 matplotlib awscli
 # in case nvidia driver was swept due to GCP kernel update, reinstall drivers
 sudo /opt/deeplearning/install-driver.sh
 
@@ -87,3 +87,21 @@ sudo growpart /dev/sda 1
 sudo resize2fs /dev/sda1
 ```
 
+To download videos from AWS S3 bucketsL
+
+```bash
+# install awscli
+curl "https://awscli.amazonaws.com/awscli-exe-linux-x86_64.zip" -o  "awscliv2.zip" && unzip awscliv2.zip && sudo ./aws/install --update
+
+# refresh terminal command cache
+hash -r
+
+# autheticate in web
+aws configure sso
+
+# set the env variable
+export AWS_PROFILE=AWSPowerUserAccess-447056034859
+
+# run the downloading script
+python download_video.py
+```

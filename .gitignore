@@ -2,6 +2,8 @@
 *.json
 *.csv
 *.pt
+*.zip
+*.mp4
 
 !train_split.json
 !test_split.json
