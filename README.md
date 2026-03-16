@@ -13,7 +13,7 @@ Create WYZE in-house IDA-VLM benchmark.
 conda create -n ida-vlm python=3.10
 conda clean --all
 
-pip install pandas tqdm boto3 matplotlib awscli
+pip install pandas tqdm boto3 matplotlib awscli opencv-python
 # in case nvidia driver was swept due to GCP kernel update, reinstall drivers
 sudo /opt/deeplearning/install-driver.sh
 
@@ -103,5 +103,10 @@ aws configure sso
 export AWS_PROFILE=AWSPowerUserAccess-447056034859
 
 # run the downloading script
+cd /home/tian.liu/IDA-VLM/download_videos
 python download_video.py
+
+# extract full frames from the videos
+python extract_frames.py
+
 ```
