@@ -48,36 +48,38 @@ def visualize_case(save_folder='examples'):
 
 if __name__ == "__main__":
 
+    ## Full frame
     # folder = '/home/tian.liu/tian_data/wyze_person_v2_cross_clothes_full_frame'
-    folder = '/home/tian.liu/tian_data/wyze_person_v2/cross_clothes'
 
-    # dataset = 'wyze_person_v2_same_clothes'
+    ## Cropped person
+    folder = '/home/tian.liu/tian_data/wyze_person_v2/cross_clothes'
     # folder = '/home/tian.liu/tian_data/wyze_person_v2/same_clothes'
 
     num_examples = 10
 
-    # load the test cases
-    # file = f'../dataset/{dataset}/test_cases_k={k}_threshold={threshold}.json'
-    # file = f'eval_cases.json'
-    # file = f'singlehousehold_crossclothes_samecamera.json'
-    # file = f'singlehousehold_crossclothes_crosscamera.json'
-    file = f'multihousehold_crossclothes_samecamera.json'
-    # file = f'multihousehold_crossclothes_crosscamera.json'
+    # load the evaluation cases
+    files = [
+        'singlehousehold_crossclothes_samecamera.json',
+        'singlehousehold_crossclothes_crosscamera.json',
+        'multihousehold_crossclothes_samecamera.json',
+        'multihousehold_crossclothes_crosscamera.json'
+    ]
 
 
-    with open(file, 'r') as f:
-        data = json.load(f)
-    test_cases = data['eval_cases']
-    print('number of test cases:', len(test_cases))
+    for file in files:
+        with open(file, 'r') as f:
+            data = json.load(f)
+        test_cases = data['eval_cases']
+        print('number of test cases:', len(test_cases))
 
-    # visualize a single case
-    # case_num = [0, 1, 2]
-    # case_num = [3, 4, 5]
+        # visualize a single case
+        # case_num = [0, 1, 2]
+        # case_num = [3, 4, 5]
 
-    # for idx in case_num:
-        # plot_case(save_folder=f'examples_{file.split(".")[0]}', sampled_idx=idx, verbose=True)
+        # for idx in case_num:
+            # plot_case(save_folder=f'examples_{file.split(".")[0]}', sampled_idx=idx, verbose=True)
 
-    # exit()
-    # choose a random test case to visualize
-    for i in range(num_examples):
-        visualize_case(save_folder=f'examples_{file.split(".")[0]}')
+        # exit()
+        # choose a random test case to visualize
+        for i in range(num_examples):
+            visualize_case(save_folder=f'examples_{file.split(".")[0]}')
