@@ -1,26 +1,15 @@
 # IDA-VLM
-Tian's work on IDA-VLM
+Building Identity-Aware VLM.
 
 
 ## Updates
 
-Create WYZE in-house IDA-VLM benchmark.
+* Mar 19, 2026: tested InternVL-3.5-8B
+* Mar 17, 2026: created WYZE in-house Person ReID VLM benchmarks.
 
 
 ## Env
 
-```bash
-conda create -n ida-vlm python=3.10
-conda clean --all
-
-pip install pandas tqdm boto3 matplotlib awscli opencv-python
-# in case nvidia driver was swept due to GCP kernel update, reinstall drivers
-sudo /opt/deeplearning/install-driver.sh
-
-# install torch and xformers of compatible versions
-pip install --force-reinstall torch==2.5.1 torchvision==0.20.1 torchaudio==2.5.1 --index-url https://download.pytorch.org/whl/cu121
-pip install xformers==0.0.28.post3
-```
 
 
 ## Benchmarks
@@ -35,23 +24,7 @@ WYZE in-house data
 
 
 
-## Prepare the dataset
 
-Using the `wyze_person_v2_cross_clothes` for example, we first split the dataset into train and test sets, ensuring no identity overlapping.
-
-```bash
-cd prepare_dataset/
-python split_train_test.py
-
-# calculate the embeddings and cosine simialrities between query and gallery images
-python calculate_embed_sim.py
-
-# format the test file, where k gallery images (> threshold) are defined for each query image
-python prepare_gallery.py test 5 0.5
-
-# visualize some gallery examples for sanity check
-python visualize_gallery.py
-```
 
 ## Test VLM
 

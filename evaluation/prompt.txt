@@ -1,0 +1,12 @@
+Image-0: <image>
+Image-1: <image>
+Image-2: <image>
+Image-3: <image>
+Image-4: <image>
+Image-5: <image>
+Given the query image in Image-0, compare the person with other persons in the following five gallery images 1 to 5,
+which gallery image matches the person in the query image?
+Note that the gallery images can be captured from either same or different cameras with different angles and backgrounds.
+And the samer person in the gallery images can be wearing same or different clothes from the query image.
+Thus, you should focus on the human-centric characteristics, such as the body shapes, face features, hairs, etc.
+Return only the number (1-5), representing which gallery image matches the person in the query image.

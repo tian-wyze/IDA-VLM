@@ -39,9 +39,9 @@ def get_household_info(gallery):
     return res
 
 
-def prepare_household_gallery(strategy, household_type, clothes, camera, household_dict, query):
+def prepare_household_gallery(scenario, household_type, clothes, camera, household_dict, query):
 
-    print(f'\nProcessing case: {strategy}...')
+    print(f'\nProcessing: {scenario}...')
     eval_cases = {} # key is identity_id, value is a list of test cases for this identity_id
     total_eval_ct = 0
     id_ct = defaultdict(int)
@@ -176,16 +176,16 @@ def prepare_household_gallery(strategy, household_type, clothes, camera, househo
     # res['event_count_sampled'] = sampled_event_ct
     res['eval_cases'] = sampled_eval_cases
 
-    save_json(res, f'{strategy}.json')
+    save_json(res, f'{scenario}.json')
 
     return eval_cases
 
 
 
 
-def prepare_multiple_household(strategy, clothes, camera, household_dict, query):
+def prepare_multiple_household(scenario, clothes, camera, household_dict, query):
 
-    print(f'\nProcessing case: {strategy}...')
+    print(f'\nProcessing: {scenario}...')
     eval_cases = {} # key is identity_id, value is a list of test cases for this identity_id
     total_eval_ct = 0
     id_ct = defaultdict(int)
@@ -255,16 +255,36 @@ def prepare_multiple_household(strategy, clothes, camera, household_dict, query)
     res['id_count'] = id_ct
     res['event_count'] = event_ct
     res['eval_cases'] = eval_cases
-    save_json(res, f'{case}.json')
+    save_json(res, f'{scenario}.json')
 
     return eval_cases
 
+def check_mac_addr(household_dict):
+
+    identity_id_mac_count = defaultdict(set)
+    for household_id in household_dict:
+        for identity_id in household_dict[household_id]:
+            for mac_addr in household_dict[household_id][identity_id]:
+                identity_id_mac_count[identity_id].add(mac_addr)
+
+    print(f"Total unique identity IDs: {len(identity_id_mac_count)}")
+    print("Identity IDs with more than 1 unique MAC address:")
+    for identity_id, mac_addrs in identity_id_mac_count.items():
+        if len(mac_addrs) > 1:
+            print(f"{identity_id}: {len(mac_addrs)} unique MAC addresses")
 
 
 
 if __name__ == "__main__":
 
+    # this defines the dataet we use
+    # json_file = '/home/tian.liu/tian_data/wyze_person_v2_cross_clothes_full_frame/cross_clothes.json'
     json_file = '/home/tian.liu/tian_data/wyze_person_v2_cross_clothes_full_frame/cross_clothes.json'
+
+
+
+    case = 'v2_cross_clothes'
+
     with open(json_file, 'r') as f:
         data = json.load(f)
     gallery = data['gallery']
@@ -274,52 +294,41 @@ if __name__ == "__main__":
 
     # extract the household_id from the gallery
     household_dict = get_household_info(gallery)
-    save_json(household_dict, 'household_info_v2_cross_clothes.json')
+    save_json(household_dict, f'household_info_{case}.json')
 
-    ## check how many identity_id have more than 1 mac address
-    ## all the identity_id should have only 1 unique mac address
-    # identity_id_mac_count = defaultdict(set)
-    # for household_id in household_dict:
-    #     for identity_id in household_dict[household_id]:
-    #         for mac_addr in household_dict[household_id][identity_id]:
-    #             identity_id_mac_count[identity_id].add(mac_addr)
+    # check how many identity_id have more than 1 mac address
+    # all the identity_id should have only 1 unique mac address
+    check_mac_addr(household_dict)
 
-    # print(f"Total unique identity IDs: {len(identity_id_mac_count)}")
-    # print("Identity IDs with more than 1 unique MAC address:")
-    # for identity_id, mac_addrs in identity_id_mac_count.items():
-    #     if len(mac_addrs) > 1:
-    #         print(f"{identity_id}: {len(mac_addrs)} unique MAC addresses")
-    # exit()
+    # create subsets of the data based on different strategies
+    scenario = 'singleton_crossclothes_samecamera'
+    singleton_crossclothes_samecamera = prepare_household_gallery(scenario=scenario,
+                                                                  household_type='single',
+                                                                  clothes='cross',
+                                                                  camera='same',
+                                                                  household_dict=household_dict,
+                                                                  query=query)
 
-    strategy = 'singlehousehold_crossclothes_samecamera'
-    single_crossclothes_samecamera = prepare_household_gallery(strategy=strategy,
-                                                               household_type='single',
-                                                            clothes='cross',
-                                                            camera='same',
-                                                            household_dict=household_dict,
-                                                            query=query)
+    scenario = 'singleton_crossclothes_crosscamera'
+    singleton_crossclothes_crosscamera = prepare_household_gallery(scenario=scenario,
+                                                                   household_type='single',
+                                                                   clothes='cross',
+                                                                   camera='cross',
+                                                                   household_dict=household_dict,
+                                                                   query=query)
 
+    scenario = 'family_crossclothes_samecamera'
+    family_crossclothes_samecamera = prepare_household_gallery(scenario=scenario,
+                                                               household_type='multiple',
+                                                               clothes='cross',
+                                                               camera='same',
+                                                               household_dict=household_dict,
+                                                               query=query)
 
-    strategy = 'singlehousehold_crossclothes_crosscamera'
-    single_crossclothes_crosscamera = prepare_household_gallery(strategy=strategy,
-                                                                household_type='single',
-                                                            clothes='cross',
-                                                            camera='cross',
-                                                            household_dict=household_dict,
-                                                            query=query)
-
-    strategy = 'multihousehold_crossclothes_samecamera'
-    multihousehold_crossclothes_samecamera = prepare_household_gallery(strategy=strategy,
-                                                                       household_type='multiple',
-                                                                        clothes='cross',
-                                                                        camera='same',
-                                                                        household_dict=household_dict,
-                                                                        query=query)
-
-    strategy = 'multihousehold_crossclothes_crosscamera'
-    multihousehold_crossclothes_crosscamera = prepare_household_gallery(strategy=strategy,
-                                                                        household_type='multiple',
-                                                                        clothes='cross',
-                                                                        camera='cross',
-                                                                        household_dict=household_dict,
-                                                                        query=query)
+    scenario = 'family_crossclothes_crosscamera'
+    family_crossclothes_crosscamera = prepare_household_gallery(scenario=scenario,
+                                                                household_type='multiple',
+                                                                clothes='cross',
+                                                                camera='cross',
+                                                                household_dict=household_dict,
+                                                                query=query)

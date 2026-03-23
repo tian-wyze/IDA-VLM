@@ -59,10 +59,10 @@ if __name__ == "__main__":
 
     # load the evaluation cases
     files = [
-        'singlehousehold_crossclothes_samecamera.json',
-        'singlehousehold_crossclothes_crosscamera.json',
-        'multihousehold_crossclothes_samecamera.json',
-        'multihousehold_crossclothes_crosscamera.json'
+        # 'singleton_crossclothes_samecamera.json',
+        # 'singleton_crossclothes_crosscamera.json',
+        'family_crossclothes_samecamera.json',
+        # 'family_crossclothes_crosscamera.json'
     ]
 
 
@@ -75,11 +75,14 @@ if __name__ == "__main__":
         # visualize a single case
         # case_num = [0, 1, 2]
         # case_num = [3, 4, 5]
+        case_num = [0]
 
-        # for idx in case_num:
-            # plot_case(save_folder=f'examples_{file.split(".")[0]}', sampled_idx=idx, verbose=True)
 
-        # exit()
+        for idx in case_num:
+            plot_case(save_folder=f'examples_{file.split(".")[0]}', sampled_idx=idx, verbose=True)
+
+        exit()
+
         # choose a random test case to visualize
         for i in range(num_examples):
             visualize_case(save_folder=f'examples_{file.split(".")[0]}')
